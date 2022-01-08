@@ -79,8 +79,9 @@ export class QuestionnairePageComponent implements OnInit {
   public isCorrectAns(i: number, questionType: string) {
     let flag: boolean = false
     if (questionType === "single") {
-      this.QuestionnaireData[i].correctAnswer.includes(this.QuestionnaireData[i].submittedAnswer[0])
-      flag = true
+      if (this.QuestionnaireData[i].correctAnswer.includes(this.QuestionnaireData[i].submittedAnswer[0])) {
+        flag = true
+      }
     }
     if (questionType === "multiple") {
       this.QuestionnaireData[i].submittedAnswer.map((data: any) => {
