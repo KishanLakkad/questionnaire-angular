@@ -1,0 +1,133 @@
+<div class="well">
+    <div class="p-5 ">
+        <h1 class="mb-3">Questionnaire Page</h1>
+        <div>
+            <button class="btn btn-primary mt-2 mr-2 mb-2 ml-2" (click)="backToList()">
+                Go To List
+            </button>
+        </div>
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 p-4">
+                    <h3>Unanswerd Questions</h3>
+                    <div>
+                        <div *ngFor="let item of QuestionnaireData; let mainIndex=index ">
+                            <div class="card w-100 pl-3 my-3" *ngIf="item.isAnswered === false">
+                                <div class="card-body">
+                                    <div>
+                                        <label class="question">Question: <span>{{item.question}}</span></label>
+                                        <div *ngIf="item.questionType === 'single' ">
+                                            <label class="col-md-3 answer-text">Answer</label>
+                                            <div class="form-group row">
+                                                <div class="col-md-3" *ngFor="let option of item.options; let i=index">
+                                                    <input id="single" type="radio" value={{option}} name={{item.id}}
+                                                        (change)="valueSelection($event,mainIndex,item.questionType)">
+                                                    <label for={{item.id}}>{{option}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="item.questionType === 'multiple' ">
+                                            <label class="col-md-3 answer-text">Answer</label>
+                                            <div class="form-group row">
+                                                <div class="col-md-3" *ngFor="let data of item.options; let i=index">
+                                                    <label>
+                                                        <input type="checkbox" [value]="data"
+                                                            (change)="valueSelection($event,mainIndex,item.questionType)" />
+                                                        {{data}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="item.questionType === 'free' ">
+                                            <div class="form-group">
+                                                <label class="col-md-3 answer-text">Answer:</label>
+                                                <textarea type="text" class="form-control m-1" rows="5"
+                                                    (change)="valueSelection($event,mainIndex,item.questionType)"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-primary mt-2 mr-2 mb-2 ml-2"
+                                            (click)="submitAnswer(mainIndex)">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 p-4">
+                    <h3>Answerd Questions</h3>
+                    <div>
+                        <div *ngFor="let item of QuestionnaireDataAnswered; let mainIndex=index">
+                            <!-- <div class={{}} *ngIf="item.isAnswered === true"> -->
+                            <div class="card pl-3 my-3" *ngIf="item.isAnswered === true">
+                                <div class="card-body">
+                                    <div>
+                                        <label class="question">Question: <span>{{item.question}}</span></label>
+                                        <div *ngIf="item.questionType === 'single' ">
+                                            <label class="col-md-3 answer-text">Answer</label>
+                                            <div class="form-group row">
+                                                <!-- <label class="col-md-3">Question Type</label> -->
+                                                <div class="col-md-3 custom-control custom-radio"
+                                                    *ngFor="let option of item.options">
+                                                    <input class="custom-control-input" id="single" type="radio"
+                                                        value={{option}} name={{item.id}}
+                                                        [checked]="chekedValue(option,mainIndex)" disabled={{true}}>
+                                                    <label class="custom-control-label"
+                                                        for={{item.id}}>{{option}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="item.questionType === 'multiple' ">
+                                            <label class="col-md-3 answer-text">Answer</label>
+                                            <div class="form-group row">
+                                                <div class="col-md-3" *ngFor="let data of item.options; let i=index">
+                                                    <label>
+                                                        <input type="checkbox" [value]="data" disabled={{true}}
+                                                            [checked]="chekedValue(data,mainIndex)" />
+                                                        {{data}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="item.questionType === 'free' ">
+                                            <div class="col-md-6 form-group">
+                                                <label class="answer-text">Answer : </label><span>
+                                                    {{item.submittedAnswer[0]}}</span>
+                                                <!-- <label for="">{{item.submittedAnswer[0]}}</label> -->
+                                                <!-- <textarea type="text" class="form-control m-1" col="4" disabled={{true}} [value]="item.submittedAnswer[0]"></textarea> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="item.questionType !== 'free' "><label class="answer-text">Correct answer
+                                            is : </label> <span> {{correctAnswer(mainIndex)}}</span> </div>
+                                    <!-- <div *ngIf="item.questionType === 'free' ">Correct answer is:  {{item.submittedAnswer[0]}}</div> -->
+
+                                    <label *ngIf="isCorrectAns(mainIndex,item.questionType) && item.questionType !== 'free' " class="text-success fw-bold">
+                                        Yehh, Your answer is Correct!
+                                    </label>
+                                    <label *ngIf="!isCorrectAns(mainIndex,item.questionType) && item.questionType !== 'free' " class="text-danger fw-bold">
+                                        Sorry, Your answer is Wrong!
+                                    </label>
+
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-primary mt-2 mr-2 mb-2 ml-2 "
+                                            (click)="revertAnswer(mainIndex)">
+                                            Revert
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

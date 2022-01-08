@@ -1,0 +1,79 @@
+<div class="well">
+    <div class="container">
+        <h1 class="pt-5 mb-3">Questionnaire</h1>
+        <form>
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group d-flex justify-content-center align-items-center ">
+                        <label class="col-md-3 fw-bold">Question Type</label>
+                        <div class="col-md-3">
+                            <input id="single" type="radio" value="single" name="type"
+                                [(ngModel)]="QuestionnaireData.questionType">
+                            <label for="single">Single</label>
+                        </div>
+
+                        <div class="col-md-3">
+                            <input id="multiple" type="radio" value="multiple" name="type"
+                                [(ngModel)]="QuestionnaireData.questionType">
+                            <label for="multiple">Multiple</label>
+                        </div>
+
+                        <div class="col-md-3">
+                            <input id="free" type="radio" value="free" name="type"
+                                [(ngModel)]="QuestionnaireData.questionType">
+                            <label for="free">Free</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="answer-text" >Question</label>
+                        <input type="text" class="form-control " name="question"
+                            [(ngModel)]="QuestionnaireData.question" />
+                            <label class="text-danger ml-2" *ngIf="errMessage.errQuestion !== ''">{{errMessage.errQuestion}}</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6" *ngIf="QuestionnaireData.questionType !== 'free'">
+                    <div class="form-group">
+                        <label class="answer-text">Options</label>
+                        <div class="input-field">
+                            <input type="text" class="form-control " name="option1" [(ngModel)]="option1" />
+                            <input type="text" class="form-control " name="option2" [(ngModel)]="option2" />
+                            <input type="text" class="form-control " name="option3" [(ngModel)]="option3" />
+                            <input type="text" class="form-control " name="option4" [(ngModel)]="option4" />
+                        </div>
+                        <label class="text-danger ml-2" *ngIf="errMessage.errOption !== ''">{{errMessage.errOption}}</label>
+                            
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="answer-text">Correct Answer</label>
+                        <div class="input-field">
+                            <input type="text" class="form-control " name="correctAnswer1" [(ngModel)]="correctAnswer1" />
+                            <input *ngIf="QuestionnaireData.questionType === 'multiple'" type="text" class="form-control " name="correctAnswer2" [(ngModel)]="correctAnswer2" />
+                            <input *ngIf="QuestionnaireData.questionType === 'multiple'" type="text" class="form-control " name="correctAnswer3" [(ngModel)]="correctAnswer3" />
+                            <input *ngIf="QuestionnaireData.questionType === 'multiple'" type="text" class="form-control " name="correctAnswer4" [(ngModel)]="correctAnswer4" />
+
+                        </div>
+                            <label class="text-danger ml-2" *ngIf="errMessage.errAnswer !== ''">{{errMessage.errAnswer}}</label>
+                    </div>
+                </div>
+
+            </div>
+
+           <div class="d-flex gap-2 mt-3">
+            <button class="btn btn-primary mt-2 mr-2 mb-2 ml-0" (click)="save();">
+                Save
+            </button>
+            <button class="btn btn-primary mt-2 mr-2 mb-2 ml-2" (click)="backToList();">
+                Back to list
+            </button>
+           </div>
+
+        </form>
+    </div>
+</div>

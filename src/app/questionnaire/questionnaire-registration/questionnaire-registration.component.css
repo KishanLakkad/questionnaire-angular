@@ -1,0 +1,24 @@
+.question{
+    font-weight: bold;
+    margin-bottom: 10px !important;
+    font-size: 20px;
+}
+.answer-text{
+    font-weight: bold;
+    margin: 20px 0 !important;
+}
+input[type='checkbox']{
+    transform: scale(1.3) !important;
+    margin-right: 10px;
+    /* margin-top: 15px; */
+}
+input[type='radio']{
+    transform: scale(1.3) !important;
+    margin-right: 10px;
+    /* margin-top: 15px; */
+}
+.input-field{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}

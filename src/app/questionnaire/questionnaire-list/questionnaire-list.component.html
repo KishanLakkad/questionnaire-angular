@@ -1,0 +1,38 @@
+<div class="well">
+    <div class="container">
+        <h1 class="pt-5 mb-3">Questionnaire List</h1>
+        <div  class="d-flex gap-2">
+            <button class="btn btn-primary mt-2 mr-2 mb-2 ml-2" (click)="createQuestion()">
+                Create
+            </button>
+            <button class="btn btn-primary mt-2 mr-2 mb-2 ml-2" (click)="goToQuestionnaire();">
+                Go to  Questionnaire Page
+            </button>
+        </div>
+
+        <div class="col-md-12">
+            <table  class="table  table-striped">
+                <thead>
+                    <tr>
+                        <td scope="col">Question</td>
+                        <td scope="col">Question type</td>
+                        <td scope="col">Created Date</td>
+                        <td scope="col">Delete</td>
+                        <td scope="col">Edit</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of QuestionnaireData">
+                        <td>{{item.question}}</td>
+                        <td>{{item.questionType}}</td>
+                        <td>{{item.createdDate}}</td>
+                        <td><span (click)="delete(item.id)" class="text-danger cursor-pointer">Delete</span></td>
+                        <td><span (click)="edit(item.id)" class="text-primary cursor-pointer">Edit</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<
